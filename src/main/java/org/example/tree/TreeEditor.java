@@ -9,7 +9,9 @@ import java.awt.event.MouseEvent;
 import java.util.EventObject;
 
 public class TreeEditor extends DefaultTreeCellEditor {
-    private final JTextField textField = new JTextField(20);
+    private final JTextField textField = new JTextField(6);
+
+    private final JPanel treePanel;
 
     public TreeEditor(JTree tree, DefaultTreeCellRenderer renderer) {
         super(tree, renderer);
@@ -17,6 +19,11 @@ public class TreeEditor extends DefaultTreeCellEditor {
             System.out.printf("stopping editing");
             stopCellEditing();
         });
+
+        treePanel = new JPanel();
+        treePanel.add(new JLabel("12345: "));
+        treePanel.add(textField);
+        treePanel.add(new JLabel("Status"));
     }
 
     @Override
@@ -43,8 +50,9 @@ public class TreeEditor extends DefaultTreeCellEditor {
 
     @Override
     public Component getTreeCellEditorComponent(JTree tree, Object value, boolean isSelected, boolean expanded, boolean leaf, int row) {
+        textField.setColumns(value.toString().length());
         textField.setText(value.toString());
-        return textField;
+        return treePanel;
     }
 
 }
